@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good is added to cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        .message {
+            background-color: #e0ffe0;
+            border: 1px solid #b2ffb2;
+            padding: 20px;
+            border-radius: 5px;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .home-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .home-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="message" aria-live="polite">
+            <h1>Good is added to cart successfully!</h1>
+            <a class="home-link" href="{% url 'home' %}">Back to Home</a>
+        </div>
+    </main>
+
+</body>
+</html>

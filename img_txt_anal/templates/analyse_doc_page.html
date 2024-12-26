@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image analyse</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .analyse-button {
+            background-color: #FFFF00;
+            color: black;
+            padding: 10px 15px;
+            border: 2px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .analyse-button:hover {
+            background-color: #CCCC00;
+        }
+        .back-button {
+            background-color: #28a745;
+            color: black;
+            padding: 10px 15px;
+            border: 2px solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .back-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Image analyse</h2>
+    <form action="{% url 'complete' %}" method="post">
+        {% csrf_token %}
+        <label for="doc_id">Enter image ID:</label>
+        <input type="text" id="doc_id" name="doc_id" value="{{ doc_id }}" placeholder="ID image" required>
+
+        <button type="submit" class="analyse-button">Complete image analyse</button>
+    </form>
+
+    <form action="{% url 'home' %}" method="get">
+        <button type="submit" class="back-button">Back to the Home</button>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result of Analyse Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            color: #333;
+        }
+        .result {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .navigation {
+            margin-top: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            margin-right: 15px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Result of Analyse Document</h1>
+
+    <div class="result">
+        <strong>Analyse Result:</strong>
+        <p id="resultText">{{ text }}</p>
+        <button id="copyButton">Copy Result</button>
+    </div>
+
+    <div class="navigation">
+        <a href="{% url 'input_id' %}">Back to Enter Document ID</a>
+        <a href="{% url 'home' %}">Back to Home</a>
+    </div>
+
+    <script>
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const resultText = document.getElementById('resultText').innerText;
+            navigator.clipboard.writeText(resultText)
+                .then(() => {
+                    alert("Result copied to clipboard!");
+                })
+                .catch(err => {
+                    alert("Failed to copy: ", err);
+                });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents for Analysis</title>
+    <style>
+        .button {
+            background-color: #4CAF50;
+            color: black;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: 2px solid black;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .delete-button {
+            background-color: #FF0000;
+            color: black;
+        }
+        .delete-button:hover {
+            background-color: #e60000;
+        }
+        .analyse-button {
+            background-color: #FFFF00;
+            color: black;
+        }
+        .analyse-button:hover {
+            background-color: #CCCC00;
+        }
+        .show-text {
+            background-color: #ADD8E6;
+            color: black;
+        }
+        .show-text:hover {
+            background-color: #4682B4;
+        }
+        .document-container {
+            margin: 20px;
+            text-align: center;
+        }
+        img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+        .logout-link {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+            padding: 5px;
+        }
+        .logout-link:hover {
+            background-color: #f0f0f0;
+            color: #ff0000;
+            border-radius: 5px;
+        }
+        .user-info {
+            position: absolute;
+            font-size: 25px;
+            bottom: 550px;
+            right: 20px;
+        }
+        .cart-button {
+            position: absolute;
+            top: 130px;
+            right: 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .cart-button img {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Documents for Analysis</h1>
+
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="logout-link">Logout</button>
+    </form>
+    <div class="user-info">
+        Hello, {{ user.username }}!
+    </div>
+
+    <button class="cart-button" onclick="window.location.href='{% url 'cart_page' %}'">
+        <img src="{% static 'images/cart.png' %}" alt="CART">
+    </button>
+    <br>
+    <br>
+    <a href="{% url 'add_doc' %}" class="button">Add image</a>
+    <a href="{% url 'delete_doc_page' %}" class="button delete-button">Delete image</a>
+    <a href="{% url 'analyse_doc_page' %}" class="button analyse-button">Analyse image</a>
+    <a href="{% url 'input_id' %}" class="button show-text" style="{% if not has_items_in_cart or has_unpaid_items %}display: none;{% endif %}">Show text</a>
+
+    <h2>Uploaded documents</h2>
+    <div style="display: flex; flex-wrap: wrap;">
+        {% if docs %}
+            {% for doc in docs %}
+                <div class="document-container">
+                    <img src="{{ MEDIA_URL }}{{ doc.file_path }}" alt="IMAGE">
+                    <p>ID-dj: {{ doc.id }} ID-fa: {{ doc.external_id }}</p>
+                    <form action="{% url 'add_to_cart' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="doc_id" value="{{ doc.id }}">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No documents uploaded yet.</p>
+        {% endif %}
+    </div>
+</body>

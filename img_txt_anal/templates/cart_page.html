@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <style>
+        .button {
+            background-color: #4CAF50;
+            color: black;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: 2px solid black;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .delete-button {
+            background-color: #FF0000;
+            color: black;
+        }
+        .delete-button:hover {
+            background-color: #e60000;
+        }
+        .document-container {
+            margin: 20px;
+            text-align: center;
+        }
+        img {
+            max-width: 200px;
+            max-height: 200px;
+        }
+        .cart-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .cart-button img {
+            width: 40px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Cart</h1>
+
+    <h2>Goods in Cart</h2>
+    <div style="display: flex; flex-wrap: wrap;">
+        {% if cart_items %}
+            {% for item in cart_items %}
+                <div class="document-container">
+                    <img src="{{ MEDIA_URL }}{{ item.doc.file_path }}" alt="IMAGE">
+                    <p>ID-dj: {{ item.id }} ID-fa: {{ item.external_id }}</p>
+                    <p>{{ item.order_price }}$</p>
+                    <form action="{% url 'remove_from_cart' item.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="button delete-button">Delete</button>
+                    </form>
+                </div>
+            {% endfor %}
+            <div>
+                <h3>Total: {{ total_price }}$</h3>
+                <form action="{% url 'process_payment' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="button">PAY</button>
+                </form>
+            </div>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>
