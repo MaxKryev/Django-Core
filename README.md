@@ -22,7 +22,7 @@
 ## Установка
 
 1. Клонируйте репозиторий:
-        git clone https://github.com/MaxKryev/Django-Core
+        git clone https://github.com/MaxKryev/Django-Core.git
 
 
 2. Настройка Docker:
